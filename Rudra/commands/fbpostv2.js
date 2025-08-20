@@ -45,7 +45,7 @@ module.exports.handleEvent = async function ({ api, event }) {
     "🥳": `Party kar rahe ho ${userName}? DJ wale bhaiya ko bolna "Bhabi Ji Ko Party De" laga de! 🎶`,
     "🫠": `Pighal gaye ${userName}? Garmi mein AC chala lo na! ❄️`,
     "🙃": `Ulat pulat khel rahe ho ${userName}? Seedha bolo na yaar! 🤪`,
-    "🙂": `Nakli muskurahat ${userName}? Andar se ro rahe ho na? 😏`,
+    "🙂": `Fake smile nhi dety mre jan ${userName}? ? 🥰`,
     "🥲": `kya huwa mre jan`,
     "💖": `Mohabbat zindabad ${userName}! Par pehle parents ki permission leni padegi! 👨👩`,
     "💝": `Gift ka irada hai ${userName}? Humko toh iPhone chahiye! 📱`,
@@ -59,7 +59,7 @@ module.exports.handleEvent = async function ({ api, event }) {
     "🥀": `Murjha gaye ho ${userName}? Ek cup chai pilata hoon! ☕`,
     "🐥": `Chuza banke cute bann rahe ho ${userName}? Khao ek anda! 🥚`,
     "🔪": `Kaatne ka irada hai ${userName}? Pehle onions kaat lo! 🧅`,
-    "🎈": `Udaan bhar rahe ho ${userName}? Gas ka bill bharna padega! 💸`,
+    "🎈": `Urao  rahe ho ${userName}? Gas ka bill bharna padega! 💸`,
     "🧸": `Bachche banke cute bann rahe ho ${userName}? Chalo lullaby gaata hoon! 🎶`
   };
 
@@ -72,11 +72,11 @@ module.exports.handleEvent = async function ({ api, event }) {
 
   // If no exact match, send random desi style reply
   const randomReplies = [
-    `Arrey ${userName} yeh konsi bhasha hai? Emojipuri? 🤔`,
+    `Arrey ${userName} yeh kya ho rha? Emojipuri? 🤔`,
     `${userName} bhai itne emoji? Keyboard pe dance practice kar rahe ho kya? 💃⌨️`,
     `Wah ${userName} ji! Emoji ka pura dictionary bhej diya! 📚`,
-    `${userName} yeh emoji samajh nahi aaya... Google Baba se puch kar bataunga! 🔍`,
-    `Aree ${userName} emoji bomb! Humare pass white flag nahi hai! 🏳️`,
+    `${userName} yeh emoji samajh nahi aaya... Google  se puch kar bataunga! 🔍`,
+    `Aree ${userName}  ufff kya hogya! bus krdo ao baten krty he`,
     `${userName} emoji ki baraat nikal di! 🎉 Ab mithai khilao! 🍬`
   ];
   
