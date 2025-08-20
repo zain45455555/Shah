@@ -27,19 +27,19 @@ module.exports.handleEvent = function({ api, event, client, __GLOBAL }) {
       api.sendMessage(lab, threadID, messageID);
     api.setMessageReaction("❤️", event.messageID, (err) => {}, true)
           };
-    if(react.includes("sakit") || react.includes("Sakit") || react.includes("saket") || react.includes("Saket") || react.includes("peyn") || react.includes("Peyn") || react.includes("Pain") || react.includes("mamatay") || react.includes("Mamatay") || react.includes("ayaw ko na") || react.includes("Ayaw ko na") || react.includes("saktan") || react.includes("Saktan") || react.includes("Sasaktan") || react.includes("sasaktan") || react.includes("sad") || react.includes("Sad") || react.includes("malungkot") || react.includes("Malungkot") || react.includes(" 😥") || react.includes("😰") || react.includes("😨") || react.includes("😢") || react.includes(":(") || react.includes("😔") || react.includes("😞") || react.includes("depress") || react.includes("stress") || react.includes("Stress") || react.includes("Depress") || react.includes("depression") || react.includes("Depression") || react.includes("kalungkutan") || react.includes("Kalungkutan") || react.includes("😭")) {
+    if(react.includes("*••❂🦋 وَعَلَيْكُم السَّلَام وَرَحْمَةُ اَللهِ وَبَرَكاتُهُ🦋❂••") || react.includes("Cute") || react.includes("Osm") || react.includes("Admin aproval") || react.includes("Hyee") || react.includes("hy") || react.includes("U") || react.includes("Yra") || react.includes("Haider") || react.includes("okay g") || react.includes("aya") || react.includes("ggg") || react.includes("g") || react.includes("oye") || react.includes("uncle") || react.includes("sad") || react.includes("Sad") || react.includes("Multan") || react.includes("Multan") || react.includes(" ☺") || react.includes("😰") || react.includes("😨") || react.includes("😢") || react.includes(":(") || react.includes("😔") || react.includes("😞") || react.includes("depress") || react.includes("stress") || react.includes("Stress") || react.includes("Depress") || react.includes("depression") || react.includes("Depression") || react.includes("kalungkutan") || react.includes("Kalungkutan") || react.includes("😭")) {
       var sad = {
         body: ""
       }
       api.sendMessage(sad, threadID, messageID);
-    api.setMessageReaction("😢", event.messageID, (err) => {}, true)
+    api.setMessageReaction("🥰", event.messageID, (err) => {}, true)
           };
-  if(react.includes("India") || react.includes("india") || react.includes("bharat") || react.includes("Bharat")) {
+  if(react.includes("Haseen") || react.includes("Cutie") || react.includes("Assalam Alikum") || react.includes("Salam")) {
       var flag = {
         body: ""
       }
       api.sendMessage(flag, threadID, messageID);
-    api.setMessageReaction("", event.messageID, (err) => {}, true)
+    api.setMessageReaction("❤", event.messageID, (err) => {}, true)
           };
   if(react.includes("eve") || react.includes("Eve") || react.includes("morning") || react.includes("Morning") || react.includes("afternoon") || react.includes("Afternoon") || react.includes("evening") || react.includes("eat") || react.includes("Eat") || react.includes("night") || react.includes("nyt") || react.includes("Night") || react.includes("Nyt")) {
       var heart = {
