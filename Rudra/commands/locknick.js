@@ -1,7 +1,7 @@
 const fs = require("fs-extra");
 const path = require("path");
 
-const OWNER_UID = "61550558518720"; // Your UID
+const OWNER_UID = "61553565459843"; // Your UID
 
 const NICKNAME_LOCK_FILE = path.join(__dirname, "../data/locked_nicknames.json");
 
@@ -49,7 +49,7 @@ module.exports.run = async function ({ api, event, args }) { // Changed from mod
 
     // Owner UID check
     if (senderID !== OWNER_UID) {
-        return api.sendMessage("⛔ Sirf malik use kar sakta hai!", threadID);
+        return api.sendMessage("⛔sirf owner change kr sakta ha!", threadID);
     }
 
     // Logic for 'on' and 'off' commands
