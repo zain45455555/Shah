@@ -1,129 +1,91 @@
-const sendWaiting = true; // enable or disable sending "images in progress, please wait...";
-const textWaiting = "Image initialization, please wait a moment";
-const fonts = "/cache/Play-Bold.ttf"
-const downfonts = "https://drive.google.com/u/0/uc?id=1uni8AiYk7prdrC7hgAmezaGTMH5R8gW8&export=download"
-const fontsLink = 20
-const fontsInfo = 28
-const colorName = "#00FFFF"
-
 module.exports.config = {
-  name: "tweet-tag",
-  version: "7.3.1",
+  name: "autoemoji",
+  version: "2.0.0",
   hasPermssion: 0,
-  credits: "𝐏𝐫𝐢𝐲𝐚𝐧𝐬𝐡 𝐑𝐚𝐣𝐩𝐮𝐭",
-  description: "tweet Post",
-  commandCategory: "Edit-Img",
-  usages: "text",
-  cooldowns: 5,
-  dependencies: {
-    "canvas": "",
-    "axios": "",
-    "fs-extra": "",
-  },
+  credits: "Kashif Raza & Ayan Ali",
+  description: "Auto reply to emoji-only messages with funny desi style",
+  commandCategory: "fun",
+  usages: "auto emoji detect & reply",
+  cooldowns: 2
 };
-module.exports.wrapText = (ctx, text, maxWidth) => {
-	return new Promise(resolve => {
-		if (ctx.measureText(text).width < maxWidth) return resolve([text]);
-		if (ctx.measureText('W').width > maxWidth) return resolve(null);
-		const words = text.split(' ');
-		const lines = [];
-		let line = '';
-		while (words.length > 0) {
-			let split = false;
-			while (ctx.measureText(words[0]).width >= maxWidth) {
-				const temp = words[0];
-				words[0] = temp.slice(0, -1);
-				if (split) words[1] = `${temp.slice(-1)}${words[1]}`;
-				else {
-					split = true;
-					words.splice(1, 0, temp.slice(-1));
-				}
-			}
-			if (ctx.measureText(`${line}${words[0]}`).width < maxWidth) line += `${words.shift()} `;
-			else {
-				lines.push(line.trim());
-				line = '';
-			}
-			if (words.length === 0) lines.push(line.trim());
-		}
-		return resolve(lines);
-	});
-} 
 
-module.exports.circle = async (image) => {
-  const jimp = global.nodemodule["jimp"];
-  image = await jimp.read(image);
-  image.circle();
-  return await image.getBufferAsync("image/png");
-}
-module.exports.run = async function ({ api, event, args, Users }) {
-  let { senderID, threadID, messageID } = event;
-  const { loadImage, createCanvas } = require("canvas");
-  const request = require('request');
-  const fs = global.nodemodule["fs-extra"];
-  const axios = global.nodemodule["axios"];
-  const Canvas = global.nodemodule["canvas"];
-  let pathImg = __dirname + `/cache/fbv1.png`;
-  let pathAvata = __dirname + `/cache/fbv2.png`;
-  var text = args.join(" ");
-	if (!text) return api.sendMessage("Enter the content of the comment on the board", threadID, messageID);
-  /*                 */
-  if(event.type == "message_reply") { uid = event.messageReply.senderID }
-    else uid = event.senderID;
-    const res = await api.getUserInfoV2(uid); 
-  let getAvatarOne = (await axios.get(`https://graph.facebook.com/${uid}/picture?height=1500&width=1500&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`, { responseType: 'arraybuffer' })).data;
-  let bg = (
-    await axios.get(encodeURI(`https://i.ibb.co/xq3jLQm/Picsart-22-08-15-23-51-29-721.jpg`), {
-      responseType: "arraybuffer",
-    })
-  ).data;
-  fs.writeFileSync(pathAvata, Buffer.from(getAvatarOne, 'utf-8'));
-  avataruser = await this.circle(pathAvata);
-  fs.writeFileSync(pathImg, Buffer.from(bg, "utf-8"));
+module.exports.handleEvent = async function ({ api, event }) {
+  const { body, threadID, messageID, senderID } = event;
+  if (!body) return;
 
-/*-----------------download----------------------*/
-if(!fs.existsSync(__dirname+`${fonts}`)) { 
-      let getfont = (await axios.get(`${downfonts}`, { responseType: "arraybuffer" })).data;
-       fs.writeFileSync(__dirname+`${fonts}`, Buffer.from(getfont, "utf-8"));
-    };
-/*---------------------------------------------*/
+  const emojiOnly = /^[\p{Emoji}\s]+$/u;
+  if (!emojiOnly.test(body.trim())) return;
 
-  let baseImage = await loadImage(pathImg);
-  let baseAvata = await loadImage(avataruser);
-  let canvas = createCanvas(baseImage.width, baseImage.height);
-  let ctx = canvas.getContext("2d");
-  ctx.drawImage(baseImage, 0, 0, canvas.width, canvas.height);
-  ctx.drawImage(baseAvata, 53, 35, 85, 85);
-  ctx.font = "400 18px Arial";
-	ctx.fillStyle = "#000000";
-	ctx.textAlign = "start";
-	let fontSize = 50;
-	while (ctx.measureText(text).width > 1600) {
-		fontSize--;
-		ctx.font = `400 ${fontSize}px Arial`;
-	}
-	const lines = await this.wrapText(ctx, text, 650);
-	ctx.fillText(lines.join('\n'), 56,180);//comment
-  Canvas.registerFont(__dirname+`${fonts}`, {
-        family: "Play-Bold"
-    });
-  ctx.font = `bold 400 14px Arial, sans-serif`;
-  ctx.fillStyle = "#3A3B3C";
-  ctx.textAlign = "start";
-  fontSize = 5;
-  ctx.fillText(`${res.name}`, 153, 99);
-  ctx.font = `400 45px Arial`;
-  ctx.fillStyle = "#0000FF";
-  ctx.textAlign = "start";
-  fontSize = 250;  
-  while (ctx.measureText(text).width > 1200) {
-		fontSize--;
-		ctx.font = `300 ${fontSize}px Arial`;
-	}
-  ctx.beginPath();
-  const imageBuffer = canvas.toBuffer();
-  fs.writeFileSync(pathImg, imageBuffer);
-  fs.removeSync(pathAvata);
+  const emoji = body.trim();
+
+  // Get user info for personalized replies
+  let userName = "Babu";
+  try {
+    const userInfo = await api.getUserInfo(senderID);
+    userName = userInfo[senderID]?.name || "Babu";
+  } catch (e) {
+    console.log("Error getting user info:", e);
+  }
+
+  // Desi Style Emoji Replies
+  const replyMap = {
+    "💔": `Aray ${userName}! koi bt nhi dil tot gya ha to life ha sab chlta ha! 😆`,
+    "🧟": `${userName} zombie ban kar bina paise ke bill maang rahe ho? Yeh koi Naya trend hai? 🧟‍♂️`,
+    "🌹": `Phool dekar dil jeetne ka plan hai ${userName}? Chalo ek gulab jamun bhi khila do! 🌹🍮`,
+    "😁": `Itni khushi? Kya lottery lag gayi ${userName} ya biryani mil gayi? 😂`,
+    "😅": `Paseene mein dubi muskurahat ${userName}? AC band hai kya? ❄️`,
+    "😂": `Ziyda na hanso ${userName}, warna pet mein dard hone lagega! 🤣`,
+    "🤣": `Hans hans ke haddi toot jayegi ${userName}! Doctor ke paas jaana padega! 🏥`,
+    "😭": `Rona band karo ${userName}, warna Ammi aa jayengi puchne "Mobile mein kya dekh rahe ho?" 👵`,
+    "😉": `Aankh maregi toh Ammi se complaint kar dunga ${userName}! 👀`,
+    "😗": `Uff ${userName}, flying kiss se kaam nahi chalega... Eid pe Eidi bhi chahiye! 💸`,
+    "😘": `Chumma chati se kaam nahi chalega ${userName}, ek plate samose bhi khila do! 😋`,
+    "🥰": `Pyaar mohabbat sab theek hai ${userName}, par shaadi mein biryani zaroor bulana! 🍗`,
+    "😍": `Deewangi dikha rahe ho ${userName}? Pehle apna charger to laga lo, 1% hai battery! 🔋`,
+    "🥳": `Party kar rahe ho ${userName}? DJ wale bhaiya ko bolna "Bhabi Ji Ko Party De" laga de! 🎶`,
+    "🫠": `Pighal gaye ${userName}? Garmi mein AC chala lo na! ❄️`,
+    "🙃": `Ulat pulat khel rahe ho ${userName}? Seedha bolo na yaar! 🤪`,
+    "🙂": `Nakli muskurahat ${userName}? Andar se ro rahe ho na? 😏`,
+    "🥲": `kya huwa mre jan`,
+    "💖": `Mohabbat zindabad ${userName}! Par pehle parents ki permission leni padegi! 👨👩`,
+    "💝": `Gift ka irada hai ${userName}? Humko toh iPhone chahiye! 📱`,
+    "🧡": `Josh mein ho ${userName}? Thoda control karo, warna Ammi aayengi! 👵`,
+    "💛": `Dosti ka rang ${userName}? Yaad rakhna, hum hamesha saath hain! 🤝`,
+    "🎉": `Party ka plan hai ${userName}? DJ wale bhaiya ko bolna "Bhabi Ji Ko Party De" laga de! 🎶`,
+    "💋": `ummmmmahhhhh💋💋${userName}, baby💋💋! 😋`,
+    "👀": `Jugnu banke chamak rahe ho ${userName}? Battery low hai kya? 🔋`,
+    "🙌": `Haan bhai haan ${userName}, hum bhi nachte hain thumak thumak ke! 💃`,
+    "🫶": `Pyaar dikha rahe ho ${userName}? Hum toh sirf biryani se pyaar karte hain! 🍗`,
+    "🥀": `Murjha gaye ho ${userName}? Ek cup chai pilata hoon! ☕`,
+    "🐥": `Chuza banke cute bann rahe ho ${userName}? Khao ek anda! 🥚`,
+    "🔪": `Kaatne ka irada hai ${userName}? Pehle onions kaat lo! 🧅`,
+    "🎈": `Udaan bhar rahe ho ${userName}? Gas ka bill bharna padega! 💸`,
+    "🧸": `Bachche banke cute bann rahe ho ${userName}? Chalo lullaby gaata hoon! 🎶`
+  };
+
+  // Check for exact emoji match
+  for (const emo in replyMap) {
+    if (emoji.includes(emo)) {
+      return api.sendMessage(replyMap[emo], threadID, messageID);
+    }
+  }
+
+  // If no exact match, send random desi style reply
+  const randomReplies = [
+    `Arrey ${userName} yeh konsi bhasha hai? Emojipuri? 🤔`,
+    `${userName} bhai itne emoji? Keyboard pe dance practice kar rahe ho kya? 💃⌨️`,
+    `Wah ${userName} ji! Emoji ka pura dictionary bhej diya! 📚`,
+    `${userName} yeh emoji samajh nahi aaya... Google Baba se puch kar bataunga! 🔍`,
+    `Aree ${userName} emoji bomb! Humare pass white flag nahi hai! 🏳️`,
+    `${userName} emoji ki baraat nikal di! 🎉 Ab mithai khilao! 🍬`
+  ];
   
-  return api.sendMessage({ attachment: fs.createReadStream(pathImg) }, threadID, () => fs.unlinkSync(pathImg), messageID); 
+  return api.sendMessage(
+    randomReplies[Math.floor(Math.random() * randomReplies.length)],
+    threadID,
+    messageID
+  );
 };
+
+module.exports.run = function () {};
+
