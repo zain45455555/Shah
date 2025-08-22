@@ -5,7 +5,7 @@ module.exports.config = {
   credits: "ALI BABA + Modified by Talha",
   description: "pairing",
   commandCategory: "Love", 
-  usages: "pairA1", 
+  usages: "pair", 
   cooldowns: 10
 };
 
@@ -51,7 +51,11 @@ module.exports.run = async function({ api, event, Threads, Users }) {
   ];
 
   // Your custom Urdu poetry
-  const poetry = `💗`;
+  const poetry = `✨ بِس اِک چھوٹی سی ہاں کَر دُو!! ✨  
+ہَمارے نام اِس طَرَح جَہاں کَر دُو_____💕  
+  
+🌹 وہ مُحَبّتیں جو تُمہارے دِل میں ہَیں!!!  
+زُباں پَر لاؤ اور بِیان کَر دُو____💗`;
 
   var msg = {
     body: `╭═══💖 𝐏𝐄𝐑𝐅𝐄𝐂𝐓 𝐏𝐀𝐈𝐑 💖═══╮
@@ -64,7 +68,7 @@ ${poetry}
 
 🎯 𝐌𝐚𝐭𝐜𝐡 𝐏𝐞𝐫𝐜𝐞𝐧𝐭𝐚𝐠𝐞: ${tle}%
 
- 𝐎𝐰𝐧𝐞𝐫 Haseen: 👑 Janu bot💌
+ 𝐎𝐰𝐧𝐞𝐫 Haseen: 👑 Janu Bot 💌
 ╰═══════════════════╯`,
     mentions: arraytag,
     attachment: imglove
