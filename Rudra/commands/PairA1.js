@@ -5,7 +5,7 @@ module.exports.config = {
   credits: "ALI BABA + Modified by Talha",
   description: "pairing",
   commandCategory: "Love", 
-  usages: "pairA1", 
+  usages: "pair", 
   cooldowns: 10
 };
 
