@@ -90,7 +90,7 @@ message: ['──── •💜• ────\n                            آ�
 },
 {
 timer: '8:00:00 PM',
-message: ['──── •💜• ────\n                           Taqwa insaan ko asal kamyaabi aur sakoon deta hai               \nKashif Raza \N──── •💜• ────']
+message: ['──── •💜• ────\n                           Taqwa insaan ko asal kamyaabi aur sakoon deta hai               \nHaseen \N──── •💜• ────']
 },
 {
 timer: '9:00:00 PM',
@@ -98,7 +98,7 @@ message: ['──── •💜• ────\n                              D
 },
 {
 timer: '10:00:00 PM',
-message: ['──── •💜• ────\n                Mehnat aur dua ka muntazir rahain, jab tak kamyabi nahi milti.              \nKashif Raza \n──── •💜• ────']
+message: ['──── •💜• ────\n                Mehnat aur dua ka muntazir rahain, jab tak kamyabi nahi milti.              \nHaseen \n──── •💜• ────']
 },
 {
 timer: '11:00:00 PM',
